@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2485AE52-E2D1-4322-A51D-7CE7B24D6D82}</ProjectGuid>
+    <ProjectGuid>{5F649A09-69C7-4C08-A7E0-8DBCAC8E52BF}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>PillarKata_VendingMachine</RootNamespace>
     <AssemblyName>PillarKata-VendingMachine</AssemblyName>
