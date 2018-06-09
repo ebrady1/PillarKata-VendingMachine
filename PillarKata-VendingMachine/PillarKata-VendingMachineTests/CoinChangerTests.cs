@@ -8,26 +8,44 @@ namespace PillarKata_VendingMachineTests
     public class CoinChangerTests
     {
         int lastCoinValue;
+        int amountInserted;
 
         public CoinChangerTests()
         {
             lastCoinValue = 0;
+            amountInserted += lastCoinValue;
         }
 
-        void CoinInsertedEvent(object sender, EventArgs e)
+        void CoinChangerEvent(object sender, EventArgs e)
         {
-            lastCoinValue = ((CoinChangerEventArgs)e).Value;
+            CoinChangerEventArgs args = (CoinChangerEventArgs)e;
+            switch(args.EventType)
+            {
+                case CoinChangerEventOp.COIN_INSERTED:
+                {
+                        lastCoinValue = args.Value;
+                        break;
+                }
+
+                case CoinChangerEventOp.ISSUE_REFUND:
+                {
+                    CoinChanger changer = (CoinChanger)sender;
+                    changer.DispenseChange(amountInserted);
+                    amountInserted = 0;
+                    break;
+                }
+            }
         }
 
         /// <summary>
         /// Tests variations of valid/invalid denominations for the CoinChanger 
         /// </summary>
         [TestMethod]
-        public void InsertValidCoin()
+        public void InsertCoins()
         {
             //Create a new CoinChanger object
             CoinChanger coinChanger = new CoinChanger();
-            coinChanger.CoinInserted += CoinInsertedEvent;
+            coinChanger.CoinChangerEvent += CoinChangerEvent;
 
             //Try various "valid" coing methods
             Assert.AreEqual(true, coinChanger.InsertCoin("Nickel"), "Nickel not detected correctly");
@@ -71,5 +89,42 @@ namespace PillarKata_VendingMachineTests
 
         }
 
+        [TestMethod]
+        public void GiveRefund()
+        {
+            //Create a new CoinChanger object
+            CoinChanger coinChanger = new CoinChanger();
+            coinChanger.CoinChangerEvent += CoinChangerEvent;
+
+            //Try various "valid" coing methods
+            coinChanger.InsertCoin("Nickel");
+            coinChanger.InsertCoin("Dime");
+            coinChanger.InsertCoin("Quarter");
+            coinChanger.InsertCoin("Half Dollar");
+            coinChanger.InsertCoin("Dollar");
+            coinChanger.InsertCoin("NiCkEl");
+            coinChanger.InsertCoin("dIMe");
+            coinChanger.InsertCoin("quarteR");
+
+            // At this point, we should have $2.35 in the coin changer, issue the refund
+            Assert.AreEqual(true, coinChanger.IssueRefund());
+
+            //At this point, we should have no money in the coin changer, fail
+            Assert.AreEqual(false, coinChanger.IssueRefund());
+
+            coinChanger.InsertCoin("5");
+            coinChanger.InsertCoin("10");
+            coinChanger.InsertCoin("25");
+            coinChanger.InsertCoin("50");
+            coinChanger.InsertCoin("100");
+            
+            // At this point, we should have $1.90 in the coin changer, issue the refund
+            Assert.AreEqual(true, coinChanger.IssueRefund());
+
+            //At this point, we should have no money in the coin changer, fail
+            Assert.AreEqual(false, coinChanger.IssueRefund());
+
+
+        }
     }
 }

@@ -7,39 +7,6 @@ using System.Threading.Tasks;
 
 namespace PillarKata_VendingMachine
 {
-    /// <summary>
-    /// The <c>Coin</c> class.
-    /// Contains all methods to describe a coin
-    /// </summary>
-    /// 
-    public class Coin
-    {
-        public Coin()
-        {
-            Value = 0;
-            CoinName = "";
-        }
-
-        public Coin(String name, UInt16 value)
-        {
-            Value = value;
-            CoinName = name; 
-        }
-
-        public UInt16 Value { get; set; } 
-        public String CoinName { get; set; }
-    };
-
-    /// <summary>
-    /// <c>CoinChangerEventArgs</c> class.
-    /// EventArgument for Coin Inserted Event 
-    /// </summary>
-    /// 
-    public class CoinChangerEventArgs : EventArgs
-    {
-        public UInt16 Value { get; set; }
-    };
-
 
     /// <summary>
     /// The main <c>CoinChanger</c> class.
@@ -47,13 +14,6 @@ namespace PillarKata_VendingMachine
     /// </summary>
     public class CoinChanger
     {
-        //The current amount of change in the coin changer.
-        UInt16 m_Nickels        = 0;
-        UInt16 m_Dimes          = 0;
-        UInt16 m_Quarters       = 0;
-        UInt16 m_HalfDollars    = 0;
-        UInt16 m_Dollars        = 0;
-
         //Known Coin types
         Dictionary<string, Coin> COIN_VALUES = 
             new Dictionary<string, Coin> 
@@ -71,7 +31,8 @@ namespace PillarKata_VendingMachine
         //Declare a callback for others to know when a coin has been inserted
         public delegate void CoinEvent(UInt16 value);
 
-        public event EventHandler CoinInserted;
+        //Coin Changer Event 
+        public event EventHandler CoinChangerEvent;
 
         /// <summary>
         /// Class Constructor
@@ -84,18 +45,16 @@ namespace PillarKata_VendingMachine
             COIN_VALUES.Add("50", COIN_VALUES["HALF DOLLAR"]);
             COIN_VALUES.Add("100", COIN_VALUES["DOLLAR"]);
 
-            //The number of coins contained in the Coin Changer Vault
-            m_coinVault = 
-                new Dictionary<Coin, UInt16>
+            m_coinVault = new Dictionary<Coin, UInt16>
             {
-                { COIN_VALUES["NICKEL"],       m_Nickels },
-                { COIN_VALUES["DIME"],         m_Dimes },
-                { COIN_VALUES["QUARTER"],      m_Quarters},
-                { COIN_VALUES["HALF DOLLAR"],   m_HalfDollars},
-                { COIN_VALUES["DOLLAR"],       m_Dollars}
+                { COIN_VALUES["NICKEL"],       0},
+                { COIN_VALUES["DIME"],         0},
+                { COIN_VALUES["QUARTER"],      0},
+                { COIN_VALUES["HALF DOLLAR"],  0},
+                { COIN_VALUES["DOLLAR"],       0}
             };
         }
-        
+
         /// <summary>
         /// Inserts a coin into the coin changer and test if it is a valid denomination. 
         /// </summary>
@@ -123,14 +82,15 @@ namespace PillarKata_VendingMachine
                 {
                     if (m_coinVault.TryGetValue(value, out vaultItemCount))
                     {
-                        //Increment the value in the vault
-                        vaultItemCount++;
-
+                        //Increment the coin vault
+                        m_coinVault[value]++;
+                       
                         CoinChangerEventArgs e = new CoinChangerEventArgs();
+                        e.EventType = CoinChangerEventOp.COIN_INSERTED;
                         e.Value = value.Value;
 
                         //Throw an event here
-                        CoinInserted(this, e);
+                        CoinChangerEvent(this, e);
 
                         //Report success
                         retVal = true;
@@ -139,7 +99,31 @@ namespace PillarKata_VendingMachine
             }
             return retVal;
         }
-        
+
+        /// <summary>
+        /// Triggers the CoinChanger to issue a refund
+        /// </summary>
+        /// <returns>
+        /// true if the operation can succeed , otherwise false/
+        /// </returns>
+        public bool IssueRefund()
+        {
+            bool retVal = false;
+
+            CoinChangerEventArgs e = new CoinChangerEventArgs();
+            e.EventType = CoinChangerEventOp.ISSUE_REFUND;
+
+            //Throw an event here
+            CoinChangerEvent(this, e);
+
+            retVal = ((m_coinVault[(COIN_VALUES["NICKEL"])] != 0) &&
+                (m_coinVault[(COIN_VALUES["DIME"])] != 0) &&
+                (m_coinVault[(COIN_VALUES["QUARTER"])] != 0) &&
+                (m_coinVault[(COIN_VALUES["HALF DOLLAR"])] != 0) &&
+                (m_coinVault[(COIN_VALUES["DOLLAR"])] != 0));
+
+            return retVal;
+        }
 
         /// <summary>
         /// Dispense change after a valid transaction or refund. 
