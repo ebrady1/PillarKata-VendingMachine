@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="CoinChangerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProductManagerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
