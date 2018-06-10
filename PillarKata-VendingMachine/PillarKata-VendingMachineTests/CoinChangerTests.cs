@@ -3,7 +3,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PillarKata_VendingMachine;
 
 namespace PillarKata_VendingMachineTests
-{
+{    
+    /// <summary>
+    /// The main <c>CoinChangerTests</c> class.
+    /// Contains all methods for performing coin test related functions.
+    /// </summary>
     [TestClass]
     public class CoinChangerTests
     {
