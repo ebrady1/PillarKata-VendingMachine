@@ -46,5 +46,15 @@ namespace PillarKata_VendingMachine
             }
             return product; 
         }
+        
+        /// <summary>
+        /// Dispenses a particular product from inventory. 
+        /// </summary>
+        /// <param name="ID">A Unique ProductID</param>
+        /// <returns>true if the product was dispensed, otherwise false</returns>
+        public  bool DispenseProduct(UInt32 ID)
+        {
+            return false;
+        }
     }
 }

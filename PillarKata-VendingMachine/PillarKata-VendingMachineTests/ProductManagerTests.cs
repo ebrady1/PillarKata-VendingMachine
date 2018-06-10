@@ -36,5 +36,29 @@ namespace PillarKata_VendingMachineTests
             Assert.AreEqual<UInt32>(0, pm.ProductInventory(4));
 
         }
+
+        /// <summary>
+        /// Test the ability of the product manager to properly stock and 
+        /// maintain inventory of products.
+        /// </summary>
+        [TestMethod]
+        public void DispenseProducts()
+        {
+            ProductManager pm = new ProductManager();
+            Assert.AreEqual(true, pm.StockProduct(0));
+            Assert.AreEqual(true, pm.StockProduct(1));
+            Assert.AreEqual(true, pm.StockProduct(1));
+            Assert.AreEqual(true, pm.StockProduct(1));
+            Assert.AreEqual(true, pm.StockProduct(2));
+            Assert.AreEqual(true, pm.StockProduct(2));
+            Assert.AreEqual(true, pm.StockProduct(3));
+
+            Assert.AreEqual(true, pm.DispenseProduct(1));
+            Assert.AreEqual(true, pm.DispenseProduct(1));
+            Assert.AreEqual(false, pm.DispenseProduct(4));
+            Assert.AreEqual(true, pm.DispenseProduct(0));
+            Assert.AreEqual(true, pm.DispenseProduct(0));
+
+        }
     }
 }
