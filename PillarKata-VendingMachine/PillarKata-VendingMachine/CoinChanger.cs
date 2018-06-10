@@ -28,6 +28,12 @@ namespace PillarKata_VendingMachine
         //The number of coins currently in the coin changer
         static Dictionary<Coin, UInt16> m_coinVault;
 
+        Coin m_Nickel;
+        Coin m_Dime;
+        Coin m_Quarter;
+        Coin m_HalfDollar;
+        Coin m_Dollar;
+
         //Declare a callback for others to know when a coin has been inserted
         public delegate void CoinEvent(UInt16 value);
 
@@ -39,20 +45,40 @@ namespace PillarKata_VendingMachine
         /// </summary>
         public CoinChanger()
         {
-            COIN_VALUES.Add("5", COIN_VALUES["NICKEL"]);
-            COIN_VALUES.Add("10", COIN_VALUES["DIME"]);
-            COIN_VALUES.Add("25", COIN_VALUES["QUARTER"]);
-            COIN_VALUES.Add("50", COIN_VALUES["HALF DOLLAR"]);
-            COIN_VALUES.Add("100", COIN_VALUES["DOLLAR"]);
+            m_Nickel = COIN_VALUES["NICKEL"];
+            m_Dime = COIN_VALUES["DIME"];
+            m_Quarter = COIN_VALUES["QUARTER"];
+            m_HalfDollar = COIN_VALUES["HALF DOLLAR"];
+            m_Dollar = COIN_VALUES["DOLLAR"];
+
+            COIN_VALUES.Add("5",    m_Nickel); 
+            COIN_VALUES.Add("10",   m_Dime);
+            COIN_VALUES.Add("25",   m_Quarter);
+            COIN_VALUES.Add("50",   m_HalfDollar);
+            COIN_VALUES.Add("100",  m_Dollar); 
 
             m_coinVault = new Dictionary<Coin, UInt16>
             {
-                { COIN_VALUES["NICKEL"],       0},
-                { COIN_VALUES["DIME"],         0},
-                { COIN_VALUES["QUARTER"],      0},
-                { COIN_VALUES["HALF DOLLAR"],  0},
-                { COIN_VALUES["DOLLAR"],       0}
+                { m_Nickel,     0},
+                { m_Dime,       0},
+                { m_Quarter,    0},
+                { m_HalfDollar, 0},
+                { m_Dollar,     0}
             };
+        }
+        /// <summary>
+        /// Returns the amount of money stored in the coin vault
+        /// </summary>
+        /// <returns>
+        /// The amount of money, in cents, stored in the vault 
+        /// </returns>
+        int MoneyInVault()
+        {
+            return ((m_coinVault[m_Dollar] * 100) + 
+                (m_coinVault[m_HalfDollar] * 50) +
+                (m_coinVault[m_Quarter] * 25) +
+                (m_coinVault[m_Dime] * 10) + 
+                (m_coinVault[m_Nickel] * 5));
         }
 
         /// <summary>
@@ -103,24 +129,22 @@ namespace PillarKata_VendingMachine
         /// <summary>
         /// Triggers the CoinChanger to issue a refund
         /// </summary>
-        /// <returns>
-        /// true if the operation can succeed , otherwise false/
-        /// </returns>
         public bool IssueRefund()
         {
             bool retVal = false;
+            int moneyInVault = this.MoneyInVault();
 
-            CoinChangerEventArgs e = new CoinChangerEventArgs();
-            e.EventType = CoinChangerEventOp.ISSUE_REFUND;
+            if (0 != moneyInVault)
+            {
+                CoinChangerEventArgs e = new CoinChangerEventArgs();
+                e.EventType = CoinChangerEventOp.ISSUE_REFUND;
+                e.CoinVault = m_coinVault;
 
-            //Throw an event here
-            CoinChangerEvent(this, e);
+                //Throw an event here
+                CoinChangerEvent(this, e);
 
-            retVal = ((m_coinVault[(COIN_VALUES["NICKEL"])] != 0) &&
-                (m_coinVault[(COIN_VALUES["DIME"])] != 0) &&
-                (m_coinVault[(COIN_VALUES["QUARTER"])] != 0) &&
-                (m_coinVault[(COIN_VALUES["HALF DOLLAR"])] != 0) &&
-                (m_coinVault[(COIN_VALUES["DOLLAR"])] != 0));
+                retVal = (moneyInVault > this.MoneyInVault());
+            }
 
             return retVal;
         }
@@ -135,7 +159,67 @@ namespace PillarKata_VendingMachine
         /// <param name="amount">The amount of change to dispense
         public bool DispenseChange(int amount)
         {
-            return false;
+            bool inLoop = false;
+            bool retVal = false;
+            int tempAmount = amount;
+            UInt16 nickelCnt = m_coinVault[m_Nickel];
+            UInt16 dimeCnt = m_coinVault[m_Dime];
+            UInt16 quarterCnt = m_coinVault[m_Quarter];
+            UInt16 halfDollarCnt = m_coinVault[m_HalfDollar];
+            UInt16 dollarCnt = m_coinVault[m_Dollar];
+
+            //Look at the amount requested and determine if possible to 
+            //come up with a solution using a greedy algorithm
+            while(tempAmount > 0)
+            {
+                inLoop = true;
+                if ((dollarCnt > 0) && ((tempAmount / 100) >= 1))
+                {
+                    tempAmount -= 100;
+                    dollarCnt--;
+                    continue;
+                }
+                else if ((halfDollarCnt > 0) && ((tempAmount / 50) >= 1))
+                {
+                    tempAmount -= 50;
+                    halfDollarCnt--;
+                    continue;
+                }
+                else if ((quarterCnt > 0) && ((tempAmount / 25) >= 1))
+                {
+                    tempAmount -= 25;
+                    quarterCnt--;
+                    continue;
+                }
+                else if ((dimeCnt > 0) && ((tempAmount / 10) >= 1))
+                {
+                    tempAmount -= 10;
+                    dimeCnt--;
+                    continue;
+                }
+                else if ((nickelCnt > 0) && ((tempAmount / 5) >= 1))
+                {
+                    tempAmount -= 5;
+                    nickelCnt--;
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            if ((inLoop) && (0 == tempAmount))
+            {
+                m_coinVault[m_Nickel] = nickelCnt;
+                m_coinVault[m_Dime] = dimeCnt;
+                m_coinVault[m_Quarter] = quarterCnt;
+                m_coinVault[m_HalfDollar] = halfDollarCnt;
+                m_coinVault[m_Dollar] = dollarCnt;
+                retVal = true;
+            }
+
+            return retVal;
         }
 
         /// <summary>

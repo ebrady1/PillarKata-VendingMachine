@@ -13,7 +13,7 @@ namespace PillarKata_VendingMachineTests
         public CoinChangerTests()
         {
             lastCoinValue = 0;
-            amountInserted += lastCoinValue;
+            amountInserted = 0;
         }
 
         void CoinChangerEvent(object sender, EventArgs e)
@@ -24,6 +24,7 @@ namespace PillarKata_VendingMachineTests
                 case CoinChangerEventOp.COIN_INSERTED:
                 {
                         lastCoinValue = args.Value;
+                        amountInserted += lastCoinValue;
                         break;
                 }
 
@@ -99,14 +100,11 @@ namespace PillarKata_VendingMachineTests
             //Try various "valid" coing methods
             coinChanger.InsertCoin("Nickel");
             coinChanger.InsertCoin("Dime");
-            coinChanger.InsertCoin("Quarter");
             coinChanger.InsertCoin("Half Dollar");
             coinChanger.InsertCoin("Dollar");
-            coinChanger.InsertCoin("NiCkEl");
-            coinChanger.InsertCoin("dIMe");
-            coinChanger.InsertCoin("quarteR");
+            coinChanger.InsertCoin("Dollar");
 
-            // At this point, we should have $2.35 in the coin changer, issue the refund
+            // At this point, we should have $2.65 in the coin changer, issue the refund
             Assert.AreEqual(true, coinChanger.IssueRefund());
 
             //At this point, we should have no money in the coin changer, fail
@@ -123,7 +121,6 @@ namespace PillarKata_VendingMachineTests
 
             //At this point, we should have no money in the coin changer, fail
             Assert.AreEqual(false, coinChanger.IssueRefund());
-
 
         }
     }

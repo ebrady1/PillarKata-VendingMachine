@@ -27,7 +27,8 @@ namespace PillarKata_VendingMachine
     /// 
     public class CoinChangerEventArgs : EventArgs
     {
-        public CoinChangerEventOp EventType{ get; set; }
+        public CoinChangerEventOp EventType { get; set; }
         public UInt16 Value { get; set; }
-    };
+        public Dictionary<Coin, UInt16> CoinVault { get; set; }
+    }
 }
