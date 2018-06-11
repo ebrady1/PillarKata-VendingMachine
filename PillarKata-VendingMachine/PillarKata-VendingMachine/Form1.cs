@@ -15,6 +15,7 @@ namespace PillarKata_VendingMachine
         public Form1()
         {
             InitializeComponent();
+            VendingMachineCtrl vm = new VendingMachineCtrl();
         }
     }
 }

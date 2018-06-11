@@ -14,6 +14,9 @@ namespace PillarKata_VendingMachine
     {
         Dictionary<UInt32, UInt32> m_productInventory = new Dictionary<UInt32, UInt32>();
 
+        //Coin Changer Event 
+        public event EventHandler ProductManagerEvent;
+
         /// <summary>
         /// Stocks a particular product into inventory.  Used by the vendor
         /// </summary>
@@ -54,7 +57,19 @@ namespace PillarKata_VendingMachine
         /// <returns>true if the product was dispensed, otherwise false</returns>
         public  bool DispenseProduct(UInt32 ID)
         {
-            return false;
+            UInt32 value;
+            bool retVal = false;
+
+            if (m_productInventory.TryGetValue(ID, out value))
+            {
+                if (m_productInventory[ID] != 0)
+                {
+                    m_productInventory[ID]--;
+                    retVal = true;
+                }
+            }
+
+            return retVal;
         }
     }
 }

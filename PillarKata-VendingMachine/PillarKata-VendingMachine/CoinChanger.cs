@@ -154,7 +154,7 @@ namespace PillarKata_VendingMachine
         /// </summary>
         /// <returns>
         /// true if correct change was ispensed.  
-        /// <seealso cref="CanMakeChange(int)"/>
+        /// <seealso cref="CanMakeChange(uint)"/>
         /// </returns>
         /// <param name="amount">The amount of change to dispense
         public bool DispenseChange(int amount)
