@@ -8,6 +8,11 @@ namespace PillarKata_VendingMachine
 {
     public class VendingMachineCtrl
     {
+        public enum VendingMachineStatus
+        {
+           AMOUNT_INSERTED 
+        }
+
         Int32 m_amountInserted = 0;
         Int32 m_lastCoinValue = 0;
 
@@ -15,6 +20,9 @@ namespace PillarKata_VendingMachine
         CoinChanger m_coinChanger = new CoinChanger();
         ProductManager m_productManager = new ProductManager();
 
+        //The Operational Status of the Vending Machine
+        public event EventHandler VendingMachineStatusNotify;
+        
         /// <summary>
         /// Product Manager Event Callback
         /// </summary>
@@ -56,6 +64,11 @@ namespace PillarKata_VendingMachine
         {
             m_coinChanger.CoinChangerEvent += CoinChangerEvent;
             m_productManager.ProductManagerEvent += ProductManagerEvent;
+        }
+
+        public bool AcceptCoin(string coin)
+        {
+            return false;
         }
 
     }
