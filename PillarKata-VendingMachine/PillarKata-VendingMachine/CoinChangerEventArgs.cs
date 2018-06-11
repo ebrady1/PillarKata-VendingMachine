@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 namespace PillarKata_VendingMachine
 {
     /// <summary>
-    /// 
     /// EventArgument for Coin Inserted Event 
     /// </summary>
     /// 

@@ -9,5 +9,6 @@ namespace PillarKata_VendingMachine
     public class VendingMachineCtrlEventArgs : EventArgs
     {
         public VendingMachineCtrl.VendingMachineStatus Status;
+        public String DisplayData; 
     }
 }

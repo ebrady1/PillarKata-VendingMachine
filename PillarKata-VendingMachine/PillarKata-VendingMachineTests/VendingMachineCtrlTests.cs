@@ -20,8 +20,9 @@ namespace PillarKata_VendingMachineTests
 
                 switch (vmCtrlEventArgs.Status)
                 {
-                    case VendingMachineCtrl.VendingMachineStatus.AMOUNT_INSERTED:
+                    case VendingMachineCtrl.VendingMachineStatus.DISPLAY_UPDATE:
                     {
+                        m_displayString = vmCtrlEventArgs.DisplayData; 
                         break;
                     }
                 }
@@ -39,13 +40,13 @@ namespace PillarKata_VendingMachineTests
 
             //Try various "valid" coin methods
             Assert.AreEqual(true, vmCtrl.AcceptCoin("Nickel"), "Nickel not detected correctly");
-            Assert.AreEqual(".05", m_displayString, "Display Incorrect");
+            Assert.AreEqual("$0.05", m_displayString, "Display Incorrect");
             Assert.AreEqual(true, vmCtrl.AcceptCoin("Dime"), "Dime not detected correctly");
-            Assert.AreEqual("$.15", m_displayString, "Display Incorrect");
+            Assert.AreEqual("$0.15", m_displayString, "Display Incorrect");
             Assert.AreEqual(true, vmCtrl.AcceptCoin("Quarter"), "Quarter not detected correctly");
-            Assert.AreEqual("$.40", m_displayString, "Display Incorrect");
-            Assert.AreEqual(25, m_lastCoinValue, "Quarter coin value incorrect");
-            Assert.AreEqual("$.65", m_displayString, "Display Incorrect");
+            Assert.AreEqual("$0.40", m_displayString, "Display Incorrect");
+            Assert.AreEqual(true, vmCtrl.AcceptCoin("Quarter"), "Quarter not detected correctly");
+            Assert.AreEqual("$0.65", m_displayString, "Display Incorrect");
             Assert.AreEqual(true, vmCtrl.AcceptCoin("Half Dollar"), "Half Dollar not detected correctly");
             Assert.AreEqual("$1.15", m_displayString, "Display Incorrect");
             Assert.AreEqual(true, vmCtrl.AcceptCoin("Dollar"), "Dollar not detected correctly");
