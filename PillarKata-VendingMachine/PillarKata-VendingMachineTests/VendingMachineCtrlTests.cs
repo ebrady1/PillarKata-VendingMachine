@@ -118,6 +118,16 @@ namespace PillarKata_VendingMachineTests
             //At this point, the Display should indicae that no money is inserted.
             Assert.AreEqual("Insert Coin", m_displayString);
 
+            Assert.AreEqual(true, vmCtrl.AcceptCoin("Nickel"), "Nickel not detected correctly");
+            Assert.AreEqual("$0.05", m_displayString, "Display Incorrect");
+            
+            //Issue a refund again
+            Assert.AreEqual(true, vmCtrl.IssueRefund());
+            
+            //At this point, the Display should indicae that no money is inserted.
+            Assert.AreEqual("Insert Coin", m_displayString);
+
+
         }
 
     }

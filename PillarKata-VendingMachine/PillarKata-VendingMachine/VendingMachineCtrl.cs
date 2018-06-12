@@ -125,10 +125,14 @@ namespace PillarKata_VendingMachine
         {
             return m_coinChanger.InsertCoin(coin);
         }
-
+        
+        /// <summary>
+        /// Issues a Refund
+        /// </summary>
+        /// <returns></returns>
         public bool IssueRefund()
         {
-            return false;
+            return m_coinChanger.IssueRefund();
         }
     }
 }
