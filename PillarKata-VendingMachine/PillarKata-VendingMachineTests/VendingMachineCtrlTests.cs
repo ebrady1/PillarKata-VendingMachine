@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PillarKata_VendingMachine;
 
@@ -127,6 +128,55 @@ namespace PillarKata_VendingMachineTests
             //At this point, the Display should indicae that no money is inserted.
             Assert.AreEqual("Insert Coin", m_displayString);
 
+
+        }
+
+        /// <summary>
+        /// Test Cases for the Select Product Use Case
+        /// </summary>
+        [TestMethod]
+        public void SelectProduct()
+        {
+            VendingMachineCtrl vmCtrl = new VendingMachineCtrl();
+            vmCtrl.VendingMachineStatusNotify += StatusNotify;
+
+            Assert.AreEqual(true, vmCtrl.StockProduct("Cola"));
+            Assert.AreEqual(true, vmCtrl.StockProduct("Chips"));
+            Assert.AreEqual(true, vmCtrl.StockProduct("Candy"));
+
+            Assert.AreEqual(true, vmCtrl.SetProductPrice("Cola", 100));
+            Assert.AreEqual(true, vmCtrl.SetProductPrice("Chips", 50));
+            Assert.AreEqual(true, vmCtrl.SetProductPrice("Cola", 65));
+
+            //At this point, the Display should indicae that no money is inserted.
+            Assert.AreEqual("Insert Coin", m_displayString);
+
+            Assert.AreEqual(true, vmCtrl.AcceptCoin("Dollar"), "Dollar not detected correctly");
+            Assert.AreEqual("$1.00", m_displayString, "Display Incorrect");
+            Assert.AreEqual(true, vmCtrl.SelectProduct("Cola"), "Select Product Failed");
+            Assert.AreEqual("Thank You", m_displayString);
+            Thread.Sleep(5000);
+            Assert.AreEqual("Insert Coin", m_displayString);
+
+            Assert.AreEqual(true, vmCtrl.AcceptCoin("Quarter"), "Quarter not detected correctly");
+            Assert.AreEqual("$0.25", m_displayString, "Display Incorrect");
+            Assert.AreEqual(true, vmCtrl.AcceptCoin("Quarter"), "Quarter not detected correctly");
+            Assert.AreEqual("$0.50", m_displayString, "Display Incorrect");
+            Assert.AreEqual(true, vmCtrl.SelectProduct("Chips"), "Select Product Failed");
+            Assert.AreEqual("Thank You", m_displayString);
+            Thread.Sleep(5000);
+            Assert.AreEqual("Insert Coin", m_displayString);
+
+            Assert.AreEqual(true, vmCtrl.AcceptCoin("Half Dollar"), "Half Dollar not detected correctly");
+            Assert.AreEqual("$0.50", m_displayString, "Display Incorrect");
+            Assert.AreEqual(true, vmCtrl.AcceptCoin("Dime"), "Dime not detected correctly");
+            Assert.AreEqual("$0.60", m_displayString, "Display Incorrect");
+            Assert.AreEqual(true, vmCtrl.AcceptCoin("Nickel"), "Nickel not detected correctly");
+            Assert.AreEqual("$0.65", m_displayString, "Display Incorrect");
+            Assert.AreEqual(true, vmCtrl.SelectProduct("Candy"), "Select Product Failed");
+            Assert.AreEqual("Thank You", m_displayString);
+            Thread.Sleep(5000);
+            Assert.AreEqual("Insert Coin", m_displayString);
 
         }
 

@@ -103,6 +103,21 @@ namespace PillarKata_VendingMachine
             }
         }
 
+        public bool StockProduct(String product)
+        {
+            return false;
+        }
+
+        public bool SetProductPrice(String product, UInt32 Cost)
+        {
+            return false;
+        }
+
+        public bool SelectProduct(String product)
+        {
+            return false;
+        }
+
         /// <summary>
         /// <c>VendingMachineCtrl</c> test
         /// </summary>
