@@ -30,7 +30,7 @@ namespace PillarKata_VendingMachineTests
 
         }
         /// <summary>
-        /// Display Related Tests
+        /// Display Related Tests for the AcceptCoins Use Case
         /// </summary>
         [TestMethod]
         public void AcceptCoins()
@@ -86,5 +86,39 @@ namespace PillarKata_VendingMachineTests
             Assert.AreEqual(false, vmCtrl.AcceptCoin("Good Looks"), "Invalid coin detecte as good");
             Assert.AreEqual("$4.05", m_displayString, "Display Incorrect");
         }
+
+        /// <summary>
+        /// Display Related Tests for the 
+        /// </summary>
+        [TestMethod]
+        public void ReturnCoins()
+        {
+            VendingMachineCtrl vmCtrl = new VendingMachineCtrl();
+            vmCtrl.VendingMachineStatusNotify += StatusNotify;
+
+            Assert.AreEqual("Insert Coin", m_displayString);
+            
+            //Try various "valid" coin methods
+            Assert.AreEqual(true, vmCtrl.AcceptCoin("Nickel"), "Nickel not detected correctly");
+            Assert.AreEqual("$0.05", m_displayString, "Display Incorrect");
+            Assert.AreEqual(true, vmCtrl.AcceptCoin("Dime"), "Dime not detected correctly");
+            Assert.AreEqual("$0.15", m_displayString, "Display Incorrect");
+            Assert.AreEqual(true, vmCtrl.AcceptCoin("Quarter"), "Quarter not detected correctly");
+            Assert.AreEqual("$0.40", m_displayString, "Display Incorrect");
+            Assert.AreEqual(true, vmCtrl.AcceptCoin("Quarter"), "Quarter not detected correctly");
+            Assert.AreEqual("$0.65", m_displayString, "Display Incorrect");
+            Assert.AreEqual(true, vmCtrl.AcceptCoin("Half Dollar"), "Half Dollar not detected correctly");
+            Assert.AreEqual("$1.15", m_displayString, "Display Incorrect");
+            Assert.AreEqual(true, vmCtrl.AcceptCoin("Dollar"), "Dollar not detected correctly");
+            Assert.AreEqual("$2.15", m_displayString, "Display Incorrect");
+
+            //Issue a refund
+            Assert.AreEqual(true, vmCtrl.IssueRefund());
+
+            //At this point, the Display should indicae that no money is inserted.
+            Assert.AreEqual("Insert Coin", m_displayString);
+
+        }
+
     }
 }

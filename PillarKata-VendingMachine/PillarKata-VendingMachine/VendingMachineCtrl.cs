@@ -126,5 +126,9 @@ namespace PillarKata_VendingMachine
             return m_coinChanger.InsertCoin(coin);
         }
 
+        public bool IssueRefund()
+        {
+            return false;
+        }
     }
 }
