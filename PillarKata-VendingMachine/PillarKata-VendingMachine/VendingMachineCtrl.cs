@@ -110,6 +110,8 @@ namespace PillarKata_VendingMachine
         {
             m_coinChanger.CoinChangerEvent += CoinChangerEvent;
             m_productManager.ProductManagerEvent += ProductManagerEvent;
+            m_lastEventArgs.Status = VendingMachineStatus.DISPLAY_UPDATE;
+            m_lastEventArgs.DisplayData = "Insert Coin";
         }
 
         /// <summary>

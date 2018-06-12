@@ -38,6 +38,8 @@ namespace PillarKata_VendingMachineTests
             VendingMachineCtrl vmCtrl = new VendingMachineCtrl();
             vmCtrl.VendingMachineStatusNotify += StatusNotify;
 
+            Assert.AreEqual("Insert Coin", m_displayString);
+
             //Try various "valid" coin methods
             Assert.AreEqual(true, vmCtrl.AcceptCoin("Nickel"), "Nickel not detected correctly");
             Assert.AreEqual("$0.05", m_displayString, "Display Incorrect");
