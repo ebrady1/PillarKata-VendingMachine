@@ -11,8 +11,8 @@ namespace PillarKata_VendingMachineTests
     [TestClass]
     public class CoinChangerTests
     {
-        int lastCoinValue;
-        int amountInserted;
+        Int32 lastCoinValue;
+        Int32 amountInserted;
 
         public CoinChangerTests()
         {
@@ -35,7 +35,7 @@ namespace PillarKata_VendingMachineTests
                 case CoinChangerEventOp.ISSUE_REFUND:
                 {
                     CoinChanger changer = (CoinChanger)sender;
-                    changer.DispenseChange(amountInserted);
+                    changer.DispenseChange((UInt32)amountInserted);
                     amountInserted = 0;
                     break;
                 }

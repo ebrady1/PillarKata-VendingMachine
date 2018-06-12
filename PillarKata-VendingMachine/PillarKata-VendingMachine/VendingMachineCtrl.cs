@@ -2,19 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PillarKata_VendingMachine
 {
     public class VendingMachineCtrl
     {
+        const Int32 DELAY_TIME = 3000;
+
         public enum VendingMachineStatus
         {
            DISPLAY_UPDATE 
         }
 
-        Int32 m_amountInserted = 0;
-        Int32 m_lastCoinValue = 0;
+        UInt32 m_amountInserted = 0;
+        UInt32 m_lastCoinValue = 0;
 
         //The Vending Machine will have one Coin Changer
         CoinChanger m_coinChanger = new CoinChanger();
@@ -59,7 +62,6 @@ namespace PillarKata_VendingMachine
             m_lastEventArgs.Status = VendingMachineStatus.DISPLAY_UPDATE;
             m_lastEventArgs.DisplayData = String.Format("{0:C2}", currency);
             _VendingMachineStatusNotify(this, m_lastEventArgs);
-
         }
         /// <summary>
         /// Notify the customer to Insert a Coin
@@ -71,6 +73,33 @@ namespace PillarKata_VendingMachine
             _VendingMachineStatusNotify(this, m_lastEventArgs);
         }
 
+        void DisplayExactChangeOnly()
+        {
+            ///Update the Display to show Exact Change Only,
+            ///wait 3 seconds and then show the amount currently inserted
+            m_lastEventArgs.Status = VendingMachineStatus.DISPLAY_UPDATE;
+            m_lastEventArgs.DisplayData = "Exact Change Only";
+            _VendingMachineStatusNotify(this, m_lastEventArgs);
+            Thread.Sleep(DELAY_TIME);
+            DisplayCurrencyAmount(m_amountInserted / 100.0);
+        }
+
+        void DisplaySoldOut()
+        {
+            m_lastEventArgs.Status = VendingMachineStatus.DISPLAY_UPDATE;
+            m_lastEventArgs.DisplayData = "Sold Out";
+            _VendingMachineStatusNotify(this, m_lastEventArgs);
+            Thread.Sleep(DELAY_TIME);
+            DisplayCurrencyAmount(m_amountInserted / 100.0);
+        }
+
+        void DisplayThankYou()
+        {
+            m_lastEventArgs.Status = VendingMachineStatus.DISPLAY_UPDATE;
+            m_lastEventArgs.DisplayData = "Thank You";
+            _VendingMachineStatusNotify(this, m_lastEventArgs);
+            DisplayInsertCoin();
+        }
 
         /// <summary>
         /// CoinChanger event callback. 
@@ -103,19 +132,79 @@ namespace PillarKata_VendingMachine
             }
         }
 
+        /// <summary>
+        /// Stock the machine with a particular product
+        /// </summary>
+        /// <param name="product">The product to stock</param>
+        /// <returns></returns>
         public bool StockProduct(String product)
         {
-            return false;
+            return m_productManager.StockProduct(product);
         }
 
+        /// <summary>
+        /// Set the product category price
+        /// </summary>
+        /// <param name="product">The product group to set price for</param>
+        /// <param name="Cost">The cost of the product in cents</param>
+        /// <returns>true if the price is succesfully set, otherwise false</returns>
         public bool SetProductPrice(String product, UInt32 Cost)
         {
-            return false;
+            return m_productManager.SetProductPrice(product,Cost);
         }
 
+        /// <summary>
+        /// Select the specified product
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
         public bool SelectProduct(String product)
         {
-            return false;
+            bool retVal = false;
+
+            ProductData data = null;
+            retVal = m_productManager.GetProductData(product, out data);
+
+            if (retVal)
+            {
+                if (data.ProductCost != 0)
+                {
+                    if (data.ProductCost <= m_amountInserted)
+                    {
+                        if (data.ProductCount > 0)
+                        {
+                            if (m_coinChanger.DispenseChange(m_amountInserted - data.ProductCost))
+                            {
+                                if(m_productManager.DispenseProduct(product))
+                                {
+                                    DisplayThankYou();
+                                    retVal = true;
+                                }
+                            }
+                            else
+                            {
+                                ///Show Exact Change Only
+                                DisplayExactChangeOnly();
+                            }
+                        }
+                        else
+                        {
+                            ///Show SOLD OUT!
+                            DisplaySoldOut();
+                        }
+                    }
+                    else
+                    {
+                        //Show product Price 
+                        DisplayCurrencyAmount(data.ProductCost / 100);
+                    }
+
+                }
+
+
+            }
+
+            return retVal;
         }
 
         /// <summary>

@@ -154,14 +154,13 @@ namespace PillarKata_VendingMachine
         /// </summary>
         /// <returns>
         /// true if correct change was ispensed.  
-        /// <seealso cref="CanMakeChange(uint)"/>
         /// </returns>
         /// <param name="amount">The amount of change to dispense
-        public bool DispenseChange(int amount)
+        public bool DispenseChange(UInt32 amount)
         {
             bool inLoop = false;
-            bool retVal = false;
-            int tempAmount = amount;
+            bool retVal = true;
+            UInt32 tempAmount = amount;
             UInt16 nickelCnt = m_coinVault[m_Nickel];
             UInt16 dimeCnt = m_coinVault[m_Dime];
             UInt16 quarterCnt = m_coinVault[m_Quarter];
@@ -172,6 +171,7 @@ namespace PillarKata_VendingMachine
             //come up with a solution using a greedy algorithm
             while(tempAmount > 0)
             {
+                retVal = false;
                 inLoop = true;
                 if ((dollarCnt > 0) && ((tempAmount / 100) >= 1))
                 {
@@ -220,18 +220,6 @@ namespace PillarKata_VendingMachine
             }
 
             return retVal;
-        }
-
-        /// <summary>
-        /// Ask if the CoinChanger contains enough change to refund the indicated amount 
-        /// </summary>
-        /// <returns>
-        /// true if correct change can be Dispensed. "/>
-        /// </returns>
-        /// <param name="amount">The amount of change to dispense
-        public bool CanMakeChange(int amounts)
-        {
-            return false;
         }
     }
 }
