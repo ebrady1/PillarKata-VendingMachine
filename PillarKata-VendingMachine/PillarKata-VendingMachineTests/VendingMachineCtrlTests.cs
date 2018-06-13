@@ -180,5 +180,49 @@ namespace PillarKata_VendingMachineTests
 
         }
 
+        /// <summary>
+        /// Test Cases for the Select Product Use Case
+        /// </summary>
+        [TestMethod]
+        public void MakeChange()
+        {
+            VendingMachineCtrl vmCtrl = new VendingMachineCtrl();
+            vmCtrl.VendingMachineStatusNotify += StatusNotify;
+
+            /// Stock the machine with products (Vendor Specific function) 
+            Assert.AreEqual(true, vmCtrl.StockProduct("Cola"));
+            Assert.AreEqual(true, vmCtrl.StockProduct("Chips"));
+            Assert.AreEqual(true, vmCtrl.StockProduct("Candy"));
+
+            /// Set Prices for each product type (Vendor Specific Function)
+            Assert.AreEqual(true, vmCtrl.SetProductPrice("Cola", 100));
+            Assert.AreEqual(true, vmCtrl.SetProductPrice("Chips", 50));
+            Assert.AreEqual(true, vmCtrl.SetProductPrice("Candy", 65));
+
+            //At this point, the Display should indicae that no money is inserted.
+            Assert.AreEqual("Insert Coin", m_displayString);
+
+            //First, buy a product to add currency to the vending machine, so that it will
+            //have something to return in the test case. 
+            Assert.AreEqual(true, vmCtrl.AcceptCoin("Quarter"), "Quarter not detected correctly");
+            Assert.AreEqual("$0.25", m_displayString, "Display Incorrect");
+            Assert.AreEqual(true, vmCtrl.AcceptCoin("Dime"), "Dime not detected correctly");
+            Assert.AreEqual("$0.35", m_displayString, "Display Incorrect");
+            Assert.AreEqual(true, vmCtrl.AcceptCoin("Dime"), "Dime not detected correctly");
+            Assert.AreEqual("$0.45", m_displayString, "Display Incorrect");
+            Assert.AreEqual(true, vmCtrl.AcceptCoin("Nickel"), "Dime not detected correctly");
+            Assert.AreEqual("$0.50", m_displayString, "Display Incorrect");
+            Assert.AreEqual(true, vmCtrl.SelectProduct("Chips"), "Select Product Failed");
+            Assert.AreEqual("Thank You", m_prevDisplayString);
+            Assert.AreEqual("Insert Coin", m_displayString);
+
+            //Insert a dollar, but buy a $0.65 item
+            Assert.AreEqual(true, vmCtrl.AcceptCoin("Dollar"), "Half Dollar not detected correctly");
+            Assert.AreEqual("$1.00", m_displayString, "Display Incorrect");
+            Assert.AreEqual(true, vmCtrl.SelectProduct("Candy"), "Select Product Failed");
+            Assert.AreEqual("Thank You", m_prevDisplayString);
+            Assert.AreEqual("Insert Coin", m_displayString);
+        }
+
     }
 }
