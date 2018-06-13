@@ -25,7 +25,7 @@ namespace PillarKata_VendingMachine
             CoinName = name;
         }
 
-        public UInt16 Value { get; set; }
+        public UInt32 Value { get; set; }
         public String CoinName { get; set; }
     };
 

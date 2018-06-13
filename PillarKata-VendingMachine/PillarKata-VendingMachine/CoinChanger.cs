@@ -26,7 +26,7 @@ namespace PillarKata_VendingMachine
         };
 
         //The number of coins currently in the coin changer
-        static Dictionary<Coin, UInt16> m_coinVault;
+        static Dictionary<Coin, UInt32> m_coinVault;
 
         Coin m_Nickel;
         Coin m_Dime;
@@ -57,7 +57,7 @@ namespace PillarKata_VendingMachine
             COIN_VALUES.Add("50",   m_HalfDollar);
             COIN_VALUES.Add("100",  m_Dollar); 
 
-            m_coinVault = new Dictionary<Coin, UInt16>
+            m_coinVault = new Dictionary<Coin, UInt32>
             {
                 { m_Nickel,     0},
                 { m_Dime,       0},
@@ -72,7 +72,7 @@ namespace PillarKata_VendingMachine
         /// <returns>
         /// The amount of money, in cents, stored in the vault 
         /// </returns>
-        int MoneyInVault()
+        UInt32 MoneyInVault()
         {
             return ((m_coinVault[m_Dollar] * 100) + 
                 (m_coinVault[m_HalfDollar] * 50) +
@@ -91,7 +91,7 @@ namespace PillarKata_VendingMachine
         public bool InsertCoin(String coin)
         {
             bool retVal = false;
-            UInt16 vaultItemCount; 
+            UInt32 vaultItemCount; 
             Coin value;
 
             if ((!String.IsNullOrWhiteSpace(coin)) && 
@@ -132,7 +132,7 @@ namespace PillarKata_VendingMachine
         public bool IssueRefund()
         {
             bool retVal = false;
-            int moneyInVault = this.MoneyInVault();
+            UInt32 moneyInVault = this.MoneyInVault();
 
             if (0 != moneyInVault)
             {
@@ -161,18 +161,17 @@ namespace PillarKata_VendingMachine
             bool inLoop = false;
             bool retVal = true;
             UInt32 tempAmount = amount;
-            UInt16 nickelCnt = m_coinVault[m_Nickel];
-            UInt16 dimeCnt = m_coinVault[m_Dime];
-            UInt16 quarterCnt = m_coinVault[m_Quarter];
-            UInt16 halfDollarCnt = m_coinVault[m_HalfDollar];
-            UInt16 dollarCnt = m_coinVault[m_Dollar];
+            UInt32 nickelCnt = m_coinVault[m_Nickel];
+            UInt32 dimeCnt = m_coinVault[m_Dime];
+            UInt32 quarterCnt = m_coinVault[m_Quarter];
+            UInt32 halfDollarCnt = m_coinVault[m_HalfDollar];
+            UInt32 dollarCnt = m_coinVault[m_Dollar];
 
             //Look at the amount requested and determine if possible to 
             //come up with a solution using a greedy algorithm
             while(tempAmount > 0)
             {
                 retVal = false;
-                inLoop = true;
                 if ((dollarCnt > 0) && ((tempAmount / 100) >= 1))
                 {
                     tempAmount -= 100;
@@ -209,13 +208,21 @@ namespace PillarKata_VendingMachine
                 }
             }
 
-            if ((inLoop) && (0 == tempAmount))
+            if (0 == tempAmount)
             {
                 m_coinVault[m_Nickel] = nickelCnt;
                 m_coinVault[m_Dime] = dimeCnt;
                 m_coinVault[m_Quarter] = quarterCnt;
                 m_coinVault[m_HalfDollar] = halfDollarCnt;
                 m_coinVault[m_Dollar] = dollarCnt;
+
+                CoinChangerEventArgs e = new CoinChangerEventArgs();
+                e.EventType = CoinChangerEventOp.MAKE_CHANGE;
+                e.Value = amount;
+            
+                //Throw an event here
+                CoinChangerEvent(this, e);
+
                 retVal = true;
             }
 

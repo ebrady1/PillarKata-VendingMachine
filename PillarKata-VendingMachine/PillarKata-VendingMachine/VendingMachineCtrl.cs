@@ -129,6 +129,13 @@ namespace PillarKata_VendingMachine
                     DisplayInsertCoin();
                     break;
                 }
+                //A coin was inserted into the Coin Changer
+                case CoinChangerEventOp.MAKE_CHANGE:
+                {
+                    m_lastCoinValue = 0;
+                    m_amountInserted = 0;
+                    break;
+                }
             }
         }
 

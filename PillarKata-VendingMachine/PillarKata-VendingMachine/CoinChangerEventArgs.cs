@@ -16,7 +16,10 @@ namespace PillarKata_VendingMachine
         COIN_INSERTED,    
 
         /// <summary>A Refund was requested by the Customer</summary>
-        ISSUE_REFUND    
+        ISSUE_REFUND,
+        
+        /// <summary>A coin was returned to the customer</summary>
+        MAKE_CHANGE
     };
 
     /// <summary>
@@ -27,7 +30,7 @@ namespace PillarKata_VendingMachine
     public class CoinChangerEventArgs : EventArgs
     {
         public CoinChangerEventOp EventType { get; set; }
-        public UInt16 Value { get; set; }
-        public Dictionary<Coin, UInt16> CoinVault { get; set; }
+        public UInt32 Value { get; set; }
+        public Dictionary<Coin, UInt32> CoinVault { get; set; }
     }
 }

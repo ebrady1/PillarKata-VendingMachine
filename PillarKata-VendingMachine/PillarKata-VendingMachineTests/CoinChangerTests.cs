@@ -27,8 +27,8 @@ namespace PillarKata_VendingMachineTests
             {
                 case CoinChangerEventOp.COIN_INSERTED:
                 {
-                        lastCoinValue = args.Value;
-                        amountInserted += lastCoinValue;
+                        lastCoinValue = (Int32)args.Value;
+                        amountInserted += (Int32)lastCoinValue;
                         break;
                 }
 
