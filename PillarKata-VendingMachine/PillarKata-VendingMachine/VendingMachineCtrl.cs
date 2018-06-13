@@ -7,13 +7,23 @@ using System.Threading.Tasks;
 
 namespace PillarKata_VendingMachine
 {
+    /// <summary>
+    /// The main Vending Machine Control Class
+    /// This object represents the main control for the Vending Machine
+    /// </summary>
     public class VendingMachineCtrl
     {
         const Int32 DELAY_TIME = 3000;
 
+        /// <summary>
+        /// Vending Machine Event Type
+        /// </summary>
         public enum VendingMachineStatus
         {
-           DISPLAY_UPDATE 
+            /// <summary>
+            /// The Vending machine is requesting to update the display
+            /// </summary>
+            DISPLAY_UPDATE 
         }
 
         UInt32 m_amountInserted = 0;
@@ -29,8 +39,10 @@ namespace PillarKata_VendingMachine
         VendingMachineCtrlEventArgs m_lastEventArgs = new VendingMachineCtrlEventArgs();
 
         private event EventHandler _VendingMachineStatusNotify;
-        
-        //The Operational Status of the Vending Machine, will callback immediately on subscribe
+       
+        /// <summary>
+        /// The Operational Status of the Vending Machine, will callback immediately on subscribe
+        /// </summary>
         public event EventHandler VendingMachineStatusNotify
         {
             add
@@ -75,8 +87,8 @@ namespace PillarKata_VendingMachine
 
         void DisplayExactChangeOnly()
         {
-            ///Update the Display to show Exact Change Only,
-            ///wait 3 seconds and then show the amount currently inserted
+            // Update the Display to show Exact Change Only,
+            // wait 3 seconds and then show the amount currently inserted
             m_lastEventArgs.Status = VendingMachineStatus.DISPLAY_UPDATE;
             m_lastEventArgs.DisplayData = "Exact Change Only";
             _VendingMachineStatusNotify(this, m_lastEventArgs);
@@ -190,13 +202,13 @@ namespace PillarKata_VendingMachine
                             }
                             else
                             {
-                                ///Show Exact Change Only
+                                //Show Exact Change Only
                                 DisplayExactChangeOnly();
                             }
                         }
                         else
                         {
-                            ///Show SOLD OUT!
+                            //Show SOLD OUT!
                             DisplaySoldOut();
                         }
                     }

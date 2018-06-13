@@ -5,6 +5,9 @@ using PillarKata_VendingMachine;
 
 namespace PillarKata_VendingMachineTests
 {
+    /// <summary>
+    /// ProductManager related tests
+    /// </summary>
     [TestClass]
     public class ProductManagerTests
     { 
@@ -23,13 +26,13 @@ namespace PillarKata_VendingMachineTests
             Assert.AreEqual(true, pm.StockProduct("Candy"));
             Assert.AreEqual(true, pm.StockProduct("Candy"));
 
-            /// Should only have 1 Cola 
+            // Should only have 1 Cola 
             Assert.AreEqual<UInt32>(1, pm.ProductInventory("Cola"));
-            /// Should only have 3 Chips
+            // Should only have 3 Chips
             Assert.AreEqual<UInt32>(3, pm.ProductInventory("Chips"));
-            /// Should only have 2 Candy 
+            // Should only have 2 Candy 
             Assert.AreEqual<UInt32>(2, pm.ProductInventory("Candy"));
-            /// Should have no Beer 
+            // Should have no Beer 
             Assert.AreEqual<UInt32>(0, pm.ProductInventory("Beer"));
 
         }

@@ -34,10 +34,15 @@ namespace PillarKata_VendingMachine
         Coin m_HalfDollar;
         Coin m_Dollar;
 
-        //Declare a callback for others to know when a coin has been inserted
-        public delegate void CoinEvent(UInt16 value);
-
-        //Coin Changer Event 
+        /// <summary>
+        /// Public Event subscription object for the CoinChanger
+        /// Adds a subscription so other objects may be notified when any of the following occur
+        /// <list type="bullet">
+        ///     <item>A Coin is inserted</item>
+        ///     <item>The Customer has requested a full refund</item>
+        ///     <item>The CoinChanger is making change after a valid purchase</item>
+        /// </list>
+        /// </summary>
         public event EventHandler CoinChangerEvent;
 
         /// <summary>
@@ -155,10 +160,9 @@ namespace PillarKata_VendingMachine
         /// <returns>
         /// true if correct change was ispensed.  
         /// </returns>
-        /// <param name="amount">The amount of change to dispense
+        /// <param name="amount">The amount of change to dispense</param>
         public bool DispenseChange(UInt32 amount)
         {
-            bool inLoop = false;
             bool retVal = true;
             UInt32 tempAmount = amount;
             UInt32 nickelCnt = m_coinVault[m_Nickel];

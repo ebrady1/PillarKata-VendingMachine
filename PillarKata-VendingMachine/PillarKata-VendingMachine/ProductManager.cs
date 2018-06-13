@@ -15,13 +15,15 @@ namespace PillarKata_VendingMachine
         Dictionary<String, UInt32> m_productInventory = new Dictionary<String, UInt32>();
         Dictionary<String, UInt32> m_productPriceList = new Dictionary<String, UInt32>();
 
-        //Coin Changer Event 
+        /// <summary>
+        /// Subscription object for <c>ProductManagerEvents</c>
+        /// </summary>
         public event EventHandler ProductManagerEvent;
 
         /// <summary>
         /// Stocks a particular product into inventory.  Used by the vendor
         /// </summary>
-        /// <param name="ID">The product ID String</param>
+        /// <param name="product">The product ID String</param>
         /// <returns>true if the product was stocked, otherwise false</returns>
         public  bool StockProduct(String product)
         {
@@ -40,7 +42,7 @@ namespace PillarKata_VendingMachine
         /// Set the product category price
         /// </summary>
         /// <param name="product">The product group to set price for</param>
-        /// <param name="Cost">The cost of the product in cents</param>
+        /// <param name="cost">The cost of the product in cents</param>
         /// <returns>true if the price is succesfully set, otherwise false</returns>
         public bool SetProductPrice(String product, UInt32 cost)
         {
@@ -56,7 +58,8 @@ namespace PillarKata_VendingMachine
         /// <summary>
         /// Returns Data about the specific product along with inventory counts and cost
         /// </summary>
-        /// <param name="product"></param>
+        /// <param name="product">A Human readable name for the product</param>
+        /// <param name="data">A <c>ProductData</c> object containing infomation about the product</param>
         /// <returns></returns>
         public bool GetProductData(String product, out ProductData data)
         {

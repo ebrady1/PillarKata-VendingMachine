@@ -14,6 +14,9 @@ namespace PillarKata_VendingMachineTests
         Int32 lastCoinValue;
         Int32 amountInserted;
 
+        /// <summary>
+        /// The <c>CoinChanger</c> test Class
+        /// </summary>
         public CoinChangerTests()
         {
             lastCoinValue = 0;
@@ -70,6 +73,7 @@ namespace PillarKata_VendingMachineTests
             Assert.AreEqual(true, coinChanger.InsertCoin("quarteR"), "Quarter not detected correctly");
             Assert.AreEqual(25, lastCoinValue, "Quarter coin value incorrect");
 
+            //Try various "Alternate" Coin Insertions that are valid also
             Assert.AreEqual(true, coinChanger.InsertCoin("5"), "Nickel not detected correctly");
             Assert.AreEqual(5, lastCoinValue, "Nickel coin value incorrect");
             Assert.AreEqual(true, coinChanger.InsertCoin("10"), "Dime not detected correctly");
@@ -94,6 +98,9 @@ namespace PillarKata_VendingMachineTests
 
         }
 
+        /// <summary>
+        /// Issue a Full Refund Test case
+        /// </summary>
         [TestMethod]
         public void GiveRefund()
         {

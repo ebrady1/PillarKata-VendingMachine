@@ -10,8 +10,14 @@ using System.Windows.Forms;
 
 namespace PillarKata_VendingMachine
 {
+    /// <summary>
+    /// The Vending Machine Simulator main form
+    /// </summary>
     public partial class Form1 : Form
     {
+        /// <summary>
+        /// The Main Constructor
+        /// </summary>
         public Form1()
         {
             InitializeComponent();
