@@ -215,7 +215,7 @@ namespace PillarKata_VendingMachine
                     else
                     {
                         //Show product Price 
-                        DisplayCurrencyAmount(data.ProductCost / 100);
+                        DisplayCurrencyAmount(data.ProductCost / 100.0);
                     }
 
                 }
