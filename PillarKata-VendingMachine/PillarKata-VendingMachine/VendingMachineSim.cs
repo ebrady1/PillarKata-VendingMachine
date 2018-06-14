@@ -54,8 +54,17 @@ namespace PillarKata_VendingMachine
                 {
                     case VendingMachineCtrl.VendingMachineStatus.DISPLAY_UPDATE:
                     {
-                        insertCoinTextBox.Text = vmCtrlEventArgs.DisplayData;
-                        Invalidate();
+                        if (insertCoinTextBox.InvokeRequired)
+                        {
+                            insertCoinTextBox.Invoke(new MethodInvoker(delegate 
+                            {
+                                insertCoinTextBox.Text = vmCtrlEventArgs.DisplayData;
+                            }));
+                        }
+                        else
+                        {
+                            insertCoinTextBox.Text = vmCtrlEventArgs.DisplayData;
+                        }
                         break;
                     }
                 }

@@ -71,9 +71,16 @@ namespace PillarKata_VendingMachine
         /// <param name="currency"></param>
         void DisplayCurrencyAmount(double currency)
         {
-            m_lastEventArgs.Status = VendingMachineStatus.DISPLAY_UPDATE;
-            m_lastEventArgs.DisplayData = String.Format("{0:C2}", currency);
-            _VendingMachineStatusNotify(this, m_lastEventArgs);
+            if (currency != 0.0)
+            {
+                m_lastEventArgs.Status = VendingMachineStatus.DISPLAY_UPDATE;
+                m_lastEventArgs.DisplayData = String.Format("{0:C2}", currency);
+                _VendingMachineStatusNotify(this, m_lastEventArgs);
+            }
+            else
+            {
+                DisplayInsertCoin();
+            }
         }
         /// <summary>
         /// Notify the customer to Insert a Coin
@@ -92,8 +99,12 @@ namespace PillarKata_VendingMachine
             m_lastEventArgs.Status = VendingMachineStatus.DISPLAY_UPDATE;
             m_lastEventArgs.DisplayData = "Exact Change Only";
             _VendingMachineStatusNotify(this, m_lastEventArgs);
-            Thread.Sleep(DELAY_TIME);
-            DisplayCurrencyAmount(m_amountInserted / 100.0);
+            Thread t = new Thread(() =>
+            {
+                Thread.Sleep(DELAY_TIME);
+                DisplayCurrencyAmount(m_amountInserted / 100.0);
+            });
+            t.Start();
         }
 
         void DisplaySoldOut()
@@ -101,8 +112,12 @@ namespace PillarKata_VendingMachine
             m_lastEventArgs.Status = VendingMachineStatus.DISPLAY_UPDATE;
             m_lastEventArgs.DisplayData = "Sold Out";
             _VendingMachineStatusNotify(this, m_lastEventArgs);
-            Thread.Sleep(DELAY_TIME);
-            DisplayCurrencyAmount(m_amountInserted / 100.0);
+            Thread t = new Thread(() =>
+            {
+                Thread.Sleep(DELAY_TIME);
+                DisplayCurrencyAmount(m_amountInserted / 100.0);
+            });
+            t.Start();
         }
 
         void DisplayThankYou()
@@ -110,7 +125,23 @@ namespace PillarKata_VendingMachine
             m_lastEventArgs.Status = VendingMachineStatus.DISPLAY_UPDATE;
             m_lastEventArgs.DisplayData = "Thank You";
             _VendingMachineStatusNotify(this, m_lastEventArgs);
-            DisplayInsertCoin();
+            Thread t = new Thread(() =>
+            {
+                Thread.Sleep(DELAY_TIME);
+                DisplayInsertCoin();
+            });
+            t.Start();
+        }
+
+        void DisplayProductPrice(double amount)
+        {
+            DisplayCurrencyAmount(amount);
+            Thread t = new Thread(() =>
+            {
+                Thread.Sleep(DELAY_TIME);
+                DisplayCurrencyAmount(m_amountInserted / 100.0);
+            });
+            t.Start();
         }
 
         /// <summary>
@@ -138,7 +169,6 @@ namespace PillarKata_VendingMachine
                     CoinChanger changer = (CoinChanger)sender;
                     changer.DispenseChange(m_amountInserted);
                     m_amountInserted = 0;
-                    DisplayInsertCoin();
                     break;
                 }
                 //A coin was inserted into the Coin Changer
@@ -146,6 +176,7 @@ namespace PillarKata_VendingMachine
                 {
                     m_lastCoinValue = 0;
                     m_amountInserted = 0;
+                    DisplayCurrencyAmount(0);
                     break;
                 }
             }
@@ -215,14 +246,11 @@ namespace PillarKata_VendingMachine
                     else
                     {
                         //Show product Price 
-                        DisplayCurrencyAmount(data.ProductCost / 100.0);
+                        DisplayProductPrice(data.ProductCost / 100.0);
                     }
 
                 }
-
-
             }
-
             return retVal;
         }
 
