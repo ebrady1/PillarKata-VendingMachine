@@ -65,16 +65,22 @@ namespace PillarKata_VendingMachine
 
         }
 
+
+        void DisplayCurrencyAmount(double currency)
+        {
+            DisplayCurrencyAmount("", currency);
+        }
+
         /// <summary>
         /// Display the amount inserted thus far
         /// </summary>
         /// <param name="currency"></param>
-        void DisplayCurrencyAmount(double currency)
+        void DisplayCurrencyAmount(string prefix, double currency)
         {
             if (currency != 0.0)
             {
                 m_lastEventArgs.Status = VendingMachineStatus.DISPLAY_UPDATE;
-                m_lastEventArgs.DisplayData = String.Format("{0:C2}", currency);
+                m_lastEventArgs.DisplayData = String.Format(prefix + "{0:C2}", currency);
                 _VendingMachineStatusNotify(this, m_lastEventArgs);
             }
             else
@@ -128,14 +134,14 @@ namespace PillarKata_VendingMachine
             Thread t = new Thread(() =>
             {
                 Thread.Sleep(DELAY_TIME);
-                DisplayInsertCoin();
+                DisplayCurrencyAmount(m_amountInserted / 100.0);
             });
             t.Start();
         }
 
         void DisplayProductPrice(double amount)
         {
-            DisplayCurrencyAmount(amount);
+            DisplayCurrencyAmount("Cost:", amount);
             Thread t = new Thread(() =>
             {
                 Thread.Sleep(DELAY_TIME);
@@ -177,6 +183,7 @@ namespace PillarKata_VendingMachine
                     m_lastCoinValue = 0;
                     m_amountInserted = 0;
                     DisplayCurrencyAmount(0);
+                   
                     break;
                 }
             }
@@ -217,6 +224,7 @@ namespace PillarKata_VendingMachine
 
             if (retVal)
             {
+                retVal = false;
                 if (data.ProductCost != 0)
                 {
                     if (data.ProductCost <= m_amountInserted)

@@ -37,29 +37,29 @@
             this.quarterButton = new System.Windows.Forms.Button();
             this.halfDollar = new System.Windows.Forms.Button();
             this.dollarButton = new System.Windows.Forms.Button();
+            this.chipsPic1 = new System.Windows.Forms.PictureBox();
             this.chipsPic2 = new System.Windows.Forms.PictureBox();
             this.chipsPic3 = new System.Windows.Forms.PictureBox();
-            this.chipsPic4 = new System.Windows.Forms.PictureBox();
+            this.candyPic1 = new System.Windows.Forms.PictureBox();
             this.candyPic2 = new System.Windows.Forms.PictureBox();
             this.candyPic3 = new System.Windows.Forms.PictureBox();
-            this.candyPic4 = new System.Windows.Forms.PictureBox();
+            this.colaPic1 = new System.Windows.Forms.PictureBox();
             this.colaPic2 = new System.Windows.Forms.PictureBox();
             this.colaPic3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.insertCoinTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.refundButton = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.chipsPic1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chipsPic2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chipsPic3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chipsPic4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.candyPic1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.candyPic2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.candyPic3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.candyPic4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.colaPic1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.colaPic2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.colaPic3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // colaButton
@@ -147,16 +147,28 @@
             this.dollarButton.UseVisualStyleBackColor = true;
             this.dollarButton.Click += new System.EventHandler(this.dollarButton_Click);
             // 
+            // chipsPic1
+            // 
+            this.chipsPic1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.chipsPic1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.chipsPic1.Image = ((System.Drawing.Image)(resources.GetObject("chipsPic1.Image")));
+            this.chipsPic1.Location = new System.Drawing.Point(249, 86);
+            this.chipsPic1.Name = "chipsPic1";
+            this.chipsPic1.Size = new System.Drawing.Size(134, 170);
+            this.chipsPic1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.chipsPic1.TabIndex = 11;
+            this.chipsPic1.TabStop = false;
+            // 
             // chipsPic2
             // 
             this.chipsPic2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.chipsPic2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.chipsPic2.Image = ((System.Drawing.Image)(resources.GetObject("chipsPic2.Image")));
-            this.chipsPic2.Location = new System.Drawing.Point(249, 86);
+            this.chipsPic2.Location = new System.Drawing.Point(249, 103);
             this.chipsPic2.Name = "chipsPic2";
             this.chipsPic2.Size = new System.Drawing.Size(134, 170);
             this.chipsPic2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.chipsPic2.TabIndex = 11;
+            this.chipsPic2.TabIndex = 12;
             this.chipsPic2.TabStop = false;
             // 
             // chipsPic3
@@ -164,35 +176,35 @@
             this.chipsPic3.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.chipsPic3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.chipsPic3.Image = ((System.Drawing.Image)(resources.GetObject("chipsPic3.Image")));
-            this.chipsPic3.Location = new System.Drawing.Point(249, 103);
+            this.chipsPic3.Location = new System.Drawing.Point(249, 125);
             this.chipsPic3.Name = "chipsPic3";
             this.chipsPic3.Size = new System.Drawing.Size(134, 170);
             this.chipsPic3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.chipsPic3.TabIndex = 12;
+            this.chipsPic3.TabIndex = 13;
             this.chipsPic3.TabStop = false;
             // 
-            // chipsPic4
+            // candyPic1
             // 
-            this.chipsPic4.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.chipsPic4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.chipsPic4.Image = ((System.Drawing.Image)(resources.GetObject("chipsPic4.Image")));
-            this.chipsPic4.Location = new System.Drawing.Point(249, 125);
-            this.chipsPic4.Name = "chipsPic4";
-            this.chipsPic4.Size = new System.Drawing.Size(134, 170);
-            this.chipsPic4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.chipsPic4.TabIndex = 13;
-            this.chipsPic4.TabStop = false;
+            this.candyPic1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.candyPic1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.candyPic1.Image = ((System.Drawing.Image)(resources.GetObject("candyPic1.Image")));
+            this.candyPic1.Location = new System.Drawing.Point(138, 86);
+            this.candyPic1.Name = "candyPic1";
+            this.candyPic1.Size = new System.Drawing.Size(105, 170);
+            this.candyPic1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.candyPic1.TabIndex = 14;
+            this.candyPic1.TabStop = false;
             // 
             // candyPic2
             // 
             this.candyPic2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.candyPic2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.candyPic2.Image = ((System.Drawing.Image)(resources.GetObject("candyPic2.Image")));
-            this.candyPic2.Location = new System.Drawing.Point(138, 86);
+            this.candyPic2.Location = new System.Drawing.Point(138, 103);
             this.candyPic2.Name = "candyPic2";
             this.candyPic2.Size = new System.Drawing.Size(105, 170);
             this.candyPic2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.candyPic2.TabIndex = 14;
+            this.candyPic2.TabIndex = 15;
             this.candyPic2.TabStop = false;
             // 
             // candyPic3
@@ -200,24 +212,25 @@
             this.candyPic3.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.candyPic3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.candyPic3.Image = ((System.Drawing.Image)(resources.GetObject("candyPic3.Image")));
-            this.candyPic3.Location = new System.Drawing.Point(138, 103);
+            this.candyPic3.Location = new System.Drawing.Point(138, 125);
             this.candyPic3.Name = "candyPic3";
             this.candyPic3.Size = new System.Drawing.Size(105, 170);
             this.candyPic3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.candyPic3.TabIndex = 15;
+            this.candyPic3.TabIndex = 16;
             this.candyPic3.TabStop = false;
             // 
-            // candyPic4
+            // colaPic1
             // 
-            this.candyPic4.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.candyPic4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.candyPic4.Image = ((System.Drawing.Image)(resources.GetObject("candyPic4.Image")));
-            this.candyPic4.Location = new System.Drawing.Point(138, 125);
-            this.candyPic4.Name = "candyPic4";
-            this.candyPic4.Size = new System.Drawing.Size(105, 170);
-            this.candyPic4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.candyPic4.TabIndex = 16;
-            this.candyPic4.TabStop = false;
+            this.colaPic1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.colaPic1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.colaPic1.Image = ((System.Drawing.Image)(resources.GetObject("colaPic1.Image")));
+            this.colaPic1.InitialImage = ((System.Drawing.Image)(resources.GetObject("colaPic1.InitialImage")));
+            this.colaPic1.Location = new System.Drawing.Point(12, 86);
+            this.colaPic1.Name = "colaPic1";
+            this.colaPic1.Size = new System.Drawing.Size(120, 170);
+            this.colaPic1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.colaPic1.TabIndex = 17;
+            this.colaPic1.TabStop = false;
             // 
             // colaPic2
             // 
@@ -225,11 +238,11 @@
             this.colaPic2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.colaPic2.Image = ((System.Drawing.Image)(resources.GetObject("colaPic2.Image")));
             this.colaPic2.InitialImage = ((System.Drawing.Image)(resources.GetObject("colaPic2.InitialImage")));
-            this.colaPic2.Location = new System.Drawing.Point(12, 86);
+            this.colaPic2.Location = new System.Drawing.Point(12, 103);
             this.colaPic2.Name = "colaPic2";
             this.colaPic2.Size = new System.Drawing.Size(120, 170);
             this.colaPic2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.colaPic2.TabIndex = 17;
+            this.colaPic2.TabIndex = 18;
             this.colaPic2.TabStop = false;
             // 
             // colaPic3
@@ -238,25 +251,12 @@
             this.colaPic3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.colaPic3.Image = ((System.Drawing.Image)(resources.GetObject("colaPic3.Image")));
             this.colaPic3.InitialImage = ((System.Drawing.Image)(resources.GetObject("colaPic3.InitialImage")));
-            this.colaPic3.Location = new System.Drawing.Point(12, 103);
+            this.colaPic3.Location = new System.Drawing.Point(12, 125);
             this.colaPic3.Name = "colaPic3";
             this.colaPic3.Size = new System.Drawing.Size(120, 170);
             this.colaPic3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.colaPic3.TabIndex = 18;
+            this.colaPic3.TabIndex = 19;
             this.colaPic3.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.InitialImage")));
-            this.pictureBox1.Location = new System.Drawing.Point(12, 125);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(120, 170);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 19;
-            this.pictureBox1.TabStop = false;
             // 
             // insertCoinTextBox
             // 
@@ -332,30 +332,30 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.quarterButton);
             this.Controls.Add(this.insertCoinTextBox);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.colaPic3);
             this.Controls.Add(this.colaPic2);
-            this.Controls.Add(this.candyPic4);
+            this.Controls.Add(this.colaPic1);
             this.Controls.Add(this.candyPic3);
             this.Controls.Add(this.candyPic2);
-            this.Controls.Add(this.chipsPic4);
+            this.Controls.Add(this.candyPic1);
             this.Controls.Add(this.chipsPic3);
             this.Controls.Add(this.chipsPic2);
+            this.Controls.Add(this.chipsPic1);
             this.Controls.Add(this.chipsButton);
             this.Controls.Add(this.candyButton);
             this.Controls.Add(this.colaButton);
             this.Name = "VendingMachineSim";
             this.Text = "Vending Machine Simulator";
             this.Load += new System.EventHandler(this.VendingMachineSim_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.chipsPic1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chipsPic2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chipsPic3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chipsPic4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.candyPic1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.candyPic2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.candyPic3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.candyPic4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.colaPic1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.colaPic2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.colaPic3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -371,15 +371,15 @@
         private System.Windows.Forms.Button quarterButton;
         private System.Windows.Forms.Button halfDollar;
         private System.Windows.Forms.Button dollarButton;
+        private System.Windows.Forms.PictureBox chipsPic1;
         private System.Windows.Forms.PictureBox chipsPic2;
         private System.Windows.Forms.PictureBox chipsPic3;
-        private System.Windows.Forms.PictureBox chipsPic4;
+        private System.Windows.Forms.PictureBox candyPic1;
         private System.Windows.Forms.PictureBox candyPic2;
         private System.Windows.Forms.PictureBox candyPic3;
-        private System.Windows.Forms.PictureBox candyPic4;
+        private System.Windows.Forms.PictureBox colaPic1;
         private System.Windows.Forms.PictureBox colaPic2;
         private System.Windows.Forms.PictureBox colaPic3;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TextBox insertCoinTextBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;

@@ -262,7 +262,7 @@ namespace PillarKata_VendingMachineTests
             //Insert a dollar, but buy a $0.65 item
             Assert.AreEqual(true, vmCtrl.AcceptCoin("Dollar"), "Half Dollar not detected correctly");
             Assert.AreEqual("$1.00", m_displayString, "Display Incorrect");
-            Assert.AreEqual(true, vmCtrl.SelectProduct("Candy"), "Select Product Failed");
+            Assert.AreEqual(false, vmCtrl.SelectProduct("Candy"), "Select Product Failed");
             Assert.AreEqual("Exact Change Only", m_displayString);
             Thread.Sleep(DELAY_TIME);
             Assert.AreEqual("$1.00", m_displayString);
@@ -292,7 +292,7 @@ namespace PillarKata_VendingMachineTests
             //Insert a dollar, but buy a $0.65 item
             Assert.AreEqual(true, vmCtrl.AcceptCoin("Dollar"), "Half Dollar not detected correctly");
             Assert.AreEqual("$1.00", m_displayString, "Display Incorrect");
-            Assert.AreEqual(true, vmCtrl.SelectProduct("Cola"), "Select Product Failed");
+            Assert.AreEqual(false, vmCtrl.SelectProduct("Cola"), "Select Product Failed");
             Assert.AreEqual("Sold Out", m_displayString);
             Thread.Sleep(DELAY_TIME);
             Assert.AreEqual("$1.00", m_displayString);
