@@ -13,7 +13,7 @@ namespace PillarKata_VendingMachine
     /// </summary>
     public class VendingMachineCtrl
     {
-        const Int32 DELAY_TIME = 3000;
+        public const Int32 DELAY_TIME = 2000;
 
         /// <summary>
         /// Vending Machine Event Type
