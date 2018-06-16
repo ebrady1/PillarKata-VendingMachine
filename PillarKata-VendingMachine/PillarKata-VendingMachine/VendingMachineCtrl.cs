@@ -13,7 +13,10 @@ namespace PillarKata_VendingMachine
     /// </summary>
     public class VendingMachineCtrl
     {
-        public const Int32 DELAY_TIME = 2000;
+        /// <summary>
+        /// Delay time constant for displaying multiple items on display
+        /// </summary>
+        public const Int32 DELAY_TIME = 1000;
 
         /// <summary>
         /// Vending Machine Event Type
@@ -65,7 +68,10 @@ namespace PillarKata_VendingMachine
 
         }
 
-
+        /// <summary>
+        /// Helper function for displaying currencies with no prefix.
+        /// </summary>
+        /// <param name="currency"></param>
         void DisplayCurrencyAmount(double currency)
         {
             DisplayCurrencyAmount("", currency);
@@ -74,7 +80,8 @@ namespace PillarKata_VendingMachine
         /// <summary>
         /// Display the amount inserted thus far
         /// </summary>
-        /// <param name="currency"></param>
+        /// <param name="prefix">A string to prefix to the currency </param>
+        /// <param name="currency">The amount of currency to sho</param>
         void DisplayCurrencyAmount(string prefix, double currency)
         {
             if (currency != 0.0)
@@ -98,56 +105,72 @@ namespace PillarKata_VendingMachine
             _VendingMachineStatusNotify(this, m_lastEventArgs);
         }
 
-        void DisplayExactChangeOnly()
+        /// <summary>
+        /// Wait a short delay, and then revert back to the previous display state
+        /// </summary>
+        void WaitAndDisplayCurrentState()
         {
-            // Update the Display to show Exact Change Only,
-            // wait 3 seconds and then show the amount currently inserted
-            m_lastEventArgs.Status = VendingMachineStatus.DISPLAY_UPDATE;
-            m_lastEventArgs.DisplayData = "Exact Change Only";
-            _VendingMachineStatusNotify(this, m_lastEventArgs);
             Thread t = new Thread(() =>
             {
+                //Delay
                 Thread.Sleep(DELAY_TIME);
+                
+                //Show the amount inserted thus far
                 DisplayCurrencyAmount(m_amountInserted / 100.0);
             });
             t.Start();
         }
 
+        /// <summary>
+        /// Helper function to display "Exact Change Only".  
+        /// After displaying "Exact Change Only", will wait a specified delay
+        /// and then show the amount inserted thus far
+        /// </summary>
+        void DisplayExactChangeOnly()
+        {
+            // Update the Display to show Exact Change Only,
+            // wait a delay time and then show the amount currently inserted
+            m_lastEventArgs.Status = VendingMachineStatus.DISPLAY_UPDATE;
+            m_lastEventArgs.DisplayData = "Exact Change Only";
+            _VendingMachineStatusNotify(this, m_lastEventArgs);
+            WaitAndDisplayCurrentState();
+        }
+
+        /// <summary>
+        /// Helper function to display "Sold Out"
+        /// After displaying "Sold Out", wait a specified delay time and then
+        /// Show the amount inserted or insert coin
+        /// </summary>
         void DisplaySoldOut()
         {
             m_lastEventArgs.Status = VendingMachineStatus.DISPLAY_UPDATE;
             m_lastEventArgs.DisplayData = "Sold Out";
             _VendingMachineStatusNotify(this, m_lastEventArgs);
-            Thread t = new Thread(() =>
-            {
-                Thread.Sleep(DELAY_TIME);
-                DisplayCurrencyAmount(m_amountInserted / 100.0);
-            });
-            t.Start();
+            //Wait a predetermined amount of time and then display 
+            //the amount inserted
+            WaitAndDisplayCurrentState();
         }
 
+        /// <summary>
+        /// Helper function to display "Thank You"
+        /// </summary>
         void DisplayThankYou()
         {
             m_lastEventArgs.Status = VendingMachineStatus.DISPLAY_UPDATE;
             m_lastEventArgs.DisplayData = "Thank You";
             _VendingMachineStatusNotify(this, m_lastEventArgs);
-            Thread t = new Thread(() =>
-            {
-                Thread.Sleep(DELAY_TIME);
-                DisplayCurrencyAmount(m_amountInserted / 100.0);
-            });
-            t.Start();
+            WaitAndDisplayCurrentState();
         }
 
+        /// <summary>
+        /// Display the price of a product, wait a predetermined amount of 
+        /// time then show the amount inserted. 
+        /// </summary>
+        /// <param name="amount"></param>
         void DisplayProductPrice(double amount)
         {
             DisplayCurrencyAmount("Cost:", amount);
-            Thread t = new Thread(() =>
-            {
-                Thread.Sleep(DELAY_TIME);
-                DisplayCurrencyAmount(m_amountInserted / 100.0);
-            });
-            t.Start();
+            WaitAndDisplayCurrentState();
         }
 
         /// <summary>
@@ -192,11 +215,12 @@ namespace PillarKata_VendingMachine
         /// <summary>
         /// Stock the machine with a particular product
         /// </summary>
+        /// <param name="count">The number of products to stock</param>
         /// <param name="product">The product to stock</param>
         /// <returns></returns>
-        public bool StockProduct(String product)
+        public bool StockProduct(UInt32 count, String product)
         {
-            return m_productManager.StockProduct(product);
+            return m_productManager.StockProduct(count, product);
         }
 
         /// <summary>
@@ -225,35 +249,42 @@ namespace PillarKata_VendingMachine
             if (retVal)
             {
                 retVal = false;
+                // Make sure a product cost has been set  
                 if (data.ProductCost != 0)
                 {
+                    // Determine if enough money is inserted
                     if (data.ProductCost <= m_amountInserted)
                     {
+                        // Verify that the product is in inventory 
                         if (data.ProductCount > 0)
                         {
+                            //Determine if there if it is possible to give change based
+                            //upon the coins in the coin vault.
                             if (m_coinChanger.DispenseChange(m_amountInserted - data.ProductCost))
                             {
+                                //Attempt to dispense the product
                                 if(m_productManager.DispenseProduct(product))
                                 {
+                                    //Product dispensing was succesful, display "Thank You"
                                     DisplayThankYou();
                                     retVal = true;
                                 }
                             }
                             else
                             {
-                                //Show Exact Change Only
+                                //The coins stored in the coind vault can not give the proper change
                                 DisplayExactChangeOnly();
                             }
                         }
                         else
                         {
-                            //Show SOLD OUT!
+                            //Product is not in inventory, display Sold Out
                             DisplaySoldOut();
                         }
                     }
                     else
                     {
-                        //Show product Price 
+                        //Not enough money inserted, show the product price. 
                         DisplayProductPrice(data.ProductCost / 100.0);
                     }
 

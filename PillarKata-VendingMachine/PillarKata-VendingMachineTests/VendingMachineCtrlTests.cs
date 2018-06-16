@@ -150,9 +150,9 @@ namespace PillarKata_VendingMachineTests
             vmCtrl.VendingMachineStatusNotify += StatusNotify;
 
             // Stock the machine with products (Vendor Specific function) 
-            Assert.AreEqual(true, vmCtrl.StockProduct("Cola"));
-            Assert.AreEqual(true, vmCtrl.StockProduct("Chips"));
-            Assert.AreEqual(true, vmCtrl.StockProduct("Candy"));
+            Assert.AreEqual(true, vmCtrl.StockProduct(1, "Cola"));
+            Assert.AreEqual(true, vmCtrl.StockProduct(1, "Chips"));
+            Assert.AreEqual(true, vmCtrl.StockProduct(1, "Candy"));
 
             // Set Prices for each product type (Vendor Specific Function)
             Assert.AreEqual(true, vmCtrl.SetProductPrice("Cola", 100));
@@ -201,9 +201,9 @@ namespace PillarKata_VendingMachineTests
             vmCtrl.VendingMachineStatusNotify += StatusNotify;
 
             // Stock the machine with products (Vendor Specific function) 
-            Assert.AreEqual(true, vmCtrl.StockProduct("Cola"));
-            Assert.AreEqual(true, vmCtrl.StockProduct("Chips"));
-            Assert.AreEqual(true, vmCtrl.StockProduct("Candy"));
+            Assert.AreEqual(true, vmCtrl.StockProduct(1, "Cola"));
+            Assert.AreEqual(true, vmCtrl.StockProduct(1, "Chips"));
+            Assert.AreEqual(true, vmCtrl.StockProduct(1, "Candy"));
 
             // Set Prices for each product type (Vendor Specific Function)
             Assert.AreEqual(true, vmCtrl.SetProductPrice("Cola", 100));
@@ -247,9 +247,9 @@ namespace PillarKata_VendingMachineTests
             vmCtrl.VendingMachineStatusNotify += StatusNotify;
 
             // Stock the machine with products (Vendor Specific function) 
-            Assert.AreEqual(true, vmCtrl.StockProduct("Cola"));
-            Assert.AreEqual(true, vmCtrl.StockProduct("Chips"));
-            Assert.AreEqual(true, vmCtrl.StockProduct("Candy"));
+            Assert.AreEqual(true, vmCtrl.StockProduct(1, "Cola"));
+            Assert.AreEqual(true, vmCtrl.StockProduct(1, "Chips"));
+            Assert.AreEqual(true, vmCtrl.StockProduct(1, "Candy"));
 
             // Set Prices for each product type (Vendor Specific Function)
             Assert.AreEqual(true, vmCtrl.SetProductPrice("Cola", 100));
@@ -283,8 +283,8 @@ namespace PillarKata_VendingMachineTests
             Assert.AreEqual(true, vmCtrl.SetProductPrice("Candy", 65));
 
             // Stock the machine with products (Vendor Specific function) 
-            Assert.AreEqual(true, vmCtrl.StockProduct("Chips"));
-            Assert.AreEqual(true, vmCtrl.StockProduct("Candy"));
+            Assert.AreEqual(true, vmCtrl.StockProduct(1, "Chips"));
+            Assert.AreEqual(true, vmCtrl.StockProduct(1, "Candy"));
 
             //At this point, the Display should indicae that no money is inserted.
             Assert.AreEqual("Insert Coin", m_displayString);

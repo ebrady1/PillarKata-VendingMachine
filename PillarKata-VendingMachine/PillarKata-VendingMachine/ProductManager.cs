@@ -23,9 +23,10 @@ namespace PillarKata_VendingMachine
         /// <summary>
         /// Stocks a particular product into inventory.  Used by the vendor
         /// </summary>
+        /// <param name="count">The number of products to stock</param>
         /// <param name="product">The product ID String</param>
         /// <returns>true if the product was stocked, otherwise false</returns>
-        public  bool StockProduct(String product)
+        public  bool StockProduct(UInt32 count, String product)
         {
             UInt32 value = 0;
             
@@ -34,7 +35,7 @@ namespace PillarKata_VendingMachine
                 m_productInventory[product] = 0;
             }
 
-            m_productInventory[product]++;
+            m_productInventory[product] += count;
             return true;
         }
         

@@ -19,12 +19,9 @@ namespace PillarKata_VendingMachineTests
         public void StockProducts()
         {
             ProductManager pm = new ProductManager();
-            Assert.AreEqual(true, pm.StockProduct("Cola"));
-            Assert.AreEqual(true, pm.StockProduct("Chips"));
-            Assert.AreEqual(true, pm.StockProduct("Chips"));
-            Assert.AreEqual(true, pm.StockProduct("Chips"));
-            Assert.AreEqual(true, pm.StockProduct("Candy"));
-            Assert.AreEqual(true, pm.StockProduct("Candy"));
+            Assert.AreEqual(true, pm.StockProduct(1, "Cola"));
+            Assert.AreEqual(true, pm.StockProduct(3, "Chips"));
+            Assert.AreEqual(true, pm.StockProduct(2, "Candy"));
 
             // Should only have 1 Cola 
             Assert.AreEqual<UInt32>(1, pm.ProductInventory("Cola"));
@@ -46,12 +43,9 @@ namespace PillarKata_VendingMachineTests
         {
             // Add a fake inventory
             ProductManager pm = new ProductManager();
-            Assert.AreEqual(true, pm.StockProduct("Cola"));
-            Assert.AreEqual(true, pm.StockProduct("Chips"));
-            Assert.AreEqual(true, pm.StockProduct("Chips"));
-            Assert.AreEqual(true, pm.StockProduct("Chips"));
-            Assert.AreEqual(true, pm.StockProduct("Candy"));
-            Assert.AreEqual(true, pm.StockProduct("Candy"));
+            Assert.AreEqual(true, pm.StockProduct(1, "Cola"));
+            Assert.AreEqual(true, pm.StockProduct(3, "Chips"));
+            Assert.AreEqual(true, pm.StockProduct(2, "Candy"));
 
             // Try to dispense the products
             Assert.AreEqual(true, pm.DispenseProduct("Chips"));

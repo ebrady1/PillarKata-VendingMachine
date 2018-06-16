@@ -28,17 +28,9 @@ namespace PillarKata_VendingMachine
         public VendingMachineSim()
         {
             InitializeComponent();
-            m_vmCtrl.StockProduct("Cola");
-            m_vmCtrl.StockProduct("Cola");
-            m_vmCtrl.StockProduct("Cola");
-
-            m_vmCtrl.StockProduct("Candy");
-            m_vmCtrl.StockProduct("Candy");
-            m_vmCtrl.StockProduct("Candy");
-
-            m_vmCtrl.StockProduct("Chips");
-            m_vmCtrl.StockProduct("Chips");
-            m_vmCtrl.StockProduct("Chips");
+            m_vmCtrl.StockProduct(3, "Cola");
+            m_vmCtrl.StockProduct(3, "Candy");
+            m_vmCtrl.StockProduct(3, "Chips");
 
             m_vmCtrl.SetProductPrice("Cola", 100);
             m_vmCtrl.SetProductPrice("Candy", 65);
